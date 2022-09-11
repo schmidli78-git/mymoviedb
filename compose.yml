@@ -9,7 +9,7 @@ services:
       - 3306
     volumes:
       - /opt/praxisarbeit/mysql/datadir:/var/lib/mysql
-    restart: allways
+    restart: always
 
   nginx:
     build: ./nginx
@@ -17,7 +17,7 @@ services:
     container_name: nginx
     ports:
       - 80:80
-    restart: allways
+    restart: always
 
   flask:
     build: ./flask
@@ -25,4 +25,4 @@ services:
     container_name: flask
     expose:
       - 5000
-    restart: allways
+    restart: always
