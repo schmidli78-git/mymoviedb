@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block app_content %}
+<h2> {{ title }}</h2>
+<div class="container text-center" id="content">
+  <div id="bg" style="background-image: url('https://image.tmdb.org/t/p/original/{{ movie.backdrop_path }}');"></div>
+  <div id="moviedetail">
+    <div class="row">
+      <div class="col text-start col-md-3">
+        <img class="d-inline-block align-text-top img-fluid" src='https://image.tmdb.org/t/p/w500/{{ movie.poster_path }}'>
+      </div>
+      <div class="col text-start">
+        <h3>{{ movie.title }}</h3>
+        <p>{{ movie.description}}</p>
+      </div>
+      <div class="col">
+        <table class="table table-striped">
+            <tr>
+                <th scope="row" class="text-end">Genre</th>
+                <td class="text-start">{{ movie.genre.genre }}</td>
+            </tr>
+            <tr>
+                <th scope="row" class="text-end">Laufzeit</th>
+                <td class="text-start">{{ movie.duration }} min</td>
+            </tr>
+            <tr>
+                <th scope="row" class="text-end">TMDB Bewertung</th>
+                <td class="text-start">{{ movie.vote_average }}</td>
+            </tr>
+            <tr>
+                <th scope="row" class="text-end">MyMDB Bewertung</th>
+                <td class="text-start">
+                    {% for a in avg %}
+                    {{ a.mymdb_avg }}
+                    {% endfor %}
+                    </td>
+            </tr>
+        </table>
+      </div>
+    </div>
+    </div>
+  </div>
+  <div class="container text-left">
+    <hr>
+    <h2>Bewertungen</h2>
+    <table  class="table table-striped">
+        <thead>
+            <th width="80">Benutzer</th>
+            <th widht="50">Bewertung</th>
+            <th width="100%">Text</th>
+        </thead>
+    {% for rating in resultset %}
+        {% include 'detail_rows.html' %}  
+    {% endfor %}
+    </table>
+  </div>
+   
+{% endblock %}

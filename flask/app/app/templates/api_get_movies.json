@@ -1,0 +1,24 @@
+{
+    "movies": [
+        {%- for m in movies -%}
+        {
+            "title": "{{ m.title }}",
+            "description": "{{ m.description|e }}",
+            "genre": "{{ m.genre }}",
+            "duration": {{ m.duration }},
+            "poster_path": "https://image.tmdb.org/t/p/w500{{ m.poster_path }}",
+            "backdrop_path": "https://image.tmdb.org/t/p/original{{ m.backdrop_path }}",
+            "vote_avg": {{ m.vote_average }},
+            "mymdb_avg": {{ m.mymdb_avg }},
+            "ratings": [
+                {%- for r in ratings if r.movieid == m.id -%}
+                    {
+                        "rating": {{ r.rating }},
+                        "text": "{{ r.text|e }}"
+                    }{{ "," if not loop.last else "" }}
+                {%- endfor -%}
+            ]
+        }{{ "," if not loop.last else "" }}
+        {%- endfor -%}
+    ]
+}

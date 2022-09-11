@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% import 'bootstrap5/form.html' as wtf %}
+
+{% block app_content %}
+<h2>{{ title }}</h2>
+<p>Suchen Sie den Film den Sie erfassen möchten.</p>
+<form action="" method="post">
+    {{ form.hidden_tag() }}
+    <div class="row">
+      <div class="col col-md-8">
+        <input type="text" name="title" id="title" class="form-control" placeholder="Filmtitel" required>
+      </div>
+      <div class="col" width="50">
+        <input type="submit" class="btn btn-primary">
+      </div>
+    </form>
+    </div>
+  </form>
+{% if search %}
+<h2>2. Wählen Sie den gewünschten Film</h2>
+<table class="table table-hover table-striped">
+    <thead>
+        <td>Titel</td>
+        <td>Erscheinungsdatum</td>
+    </thead>
+    {% for search in search %}
+    <tr>
+        <td>
+            <a href="create/{{ search.id }}">{{ search.title }}</a>
+        </td>
+        <td>
+          {{ search.release_date }}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endif %}
+
+{% endblock %}

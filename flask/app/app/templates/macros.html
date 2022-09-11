@@ -1,0 +1,8 @@
+{% macro nav_link(endpoint, text, icon='') %}
+{% if request.endpoint.endswith(endpoint) %}
+    <a class="nav-link active" href="{{ url_for(endpoint) }}">{% if icon != '' %}<img class="d-inline-block align-text-top me-1" src="/static/{{icon}}.png">{% endif %}{{text}}</a>
+{% else %}
+    <a class="nav-link" href="{{ url_for(endpoint) }}">{% if icon != '' %}<img class="d-inline-block align-text-top me-1" src="/static/{{icon}}.png">{% endif %}{{text}}</a>
+{% endif %}
+
+{% endmacro %}

@@ -1,0 +1,28 @@
+services:
+  db:
+    build: ./mysql
+    image: own/mysqlserver
+    container_name: db
+    environment:
+      - MYSQL_ROOT_PASSWORD=geheim
+    expose:
+      - 3306
+    volumes:
+      - /opt/praxisarbeit/mysql/datadir:/var/lib/mysql
+    restart: allways
+
+  nginx:
+    build: ./nginx
+    image: own/nginx
+    container_name: nginx
+    ports:
+      - 80:80
+    restart: allways
+
+  flask:
+    build: ./flask
+    image: own/flask
+    container_name: flask
+    expose:
+      - 5000
+    restart: allways

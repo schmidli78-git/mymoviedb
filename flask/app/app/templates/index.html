@@ -1,0 +1,68 @@
+<!-- app/templates/index.html -->
+{% extends "base.html" %}
+{% import 'bootstrap5/form.html' as wtf %}
+{% block app_content %}
+<div>
+    <div><img src="/static/collage2.png" width="100%"></div>
+    <div style="width: 50%; float: left; padding: 20px;">
+      <div class="green" width="75%">
+        <h2>Willkommen auf der MyMovieDB</h2>
+        <p>MyMovieDB ist eine kostenlose Film Bewertungsplattform. Sie richtet sich an Filmliebhaber die Spass daran haben Filme zu bewerten. Jeder kann mitmachen. Erstelle Dir ein Konto und schon kannst Du loslegen.
+        </p>
+      </div>
+        <div>
+            <table  class="table table-striped">
+                <thead>
+                    <th width="150" colspan="2"><h4>MyMovieDB Statistiken</h4></th>
+                </thead>
+                {% for s in stats %}
+                <tr>
+                    <th>
+                        Filme
+                    </th>
+                    <td width="30" class="align-middle">
+                        {{ s.movies }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        Bewertungen
+                    </th>
+                    <td width="30" class="align-middle">
+                        {{ s.ratings }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        Benutzer
+                    </th>
+                    <td width="30" class="align-middle">
+                        {{ s.users }}
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+            <table  class="table table-striped">
+                <thead>
+                    <th colspan="3"><h4>Top 10 Filme</h4></th>
+                </thead>
+            {% for rating in resultset %}
+                {% include 'top10_rows.html' %}  
+            {% endfor %}
+            {% for rating in resultset %}
+            {% include 'top10_rows.html' %}  
+            {% endfor %}
+            </table>
+        </div>
+    </div>
+    <div style="width: 50%; float: left; padding: 20px;">
+        <div class="blue">
+            <h2>{{ title }}</h2>
+        {% for popular in popular %}
+        {% include 'tmdb_popular.html' %}  
+        {% endfor %}
+        </div>
+    </div>    
+</div>
+{% endblock %}
+

@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% import 'bootstrap5/form.html' as wtf %}
+{% block app_content %}
+<div class="container">
+  <h2>{{ title }}</h2>
+  <form action="/list/" method="post">
+    {{ form.hidden_tag() }}
+    <div class="row">
+      <div class="col">
+        <input type="text" name="search_title"
+        {% if search_title !="" %}
+        value="{{ search_title }}" 
+        {% endif%}
+        id="search_title" class="form-control" placeholder="Filmtitel" aria-label="First name">
+      </div>
+      <div class="col">
+        <select class="form-select" name="search_genre" id="search_genre" aria-label="Default select example">
+          <option value="0">Alle</option>
+          {% for id, genre in form.search_genre.choices %}
+          <option value="{{ id }}"
+            {% if id|int() == search_genre|int() %}
+              selected
+            {% endif %}
+          >{{ genre }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col">
+        <select class="form-select" name="search_sortorder" id="search_sortorder" aria-label="Default select example">
+          {% for id, sortorder in form.search_sortorder.choices %}
+          <option value="{{ id }}" 
+          {% if id|string() == search_sortorder|string() %}
+          selected
+          {% endif %}
+          >{{ sortorder }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col">
+        <input type="submit" value="Filtern" class="btn btn-primary btn-md" aria-label="Filtern">
+      </div>
+    </form>
+    </div>
+<br>
+
+<table class="table table-hover table-striped">
+    <thead>
+        <td><b>&nbsp;</b></td>
+        <td><b>Titel</b></td>
+        <td><b>Genre</b></td>
+        <td><b>Laufzeit</b></td>
+        <td><b>TMDB</b></td>
+        <td><b>MyMDB</b></td>
+        <td><b>Du</b></td>
+        <td colspan="3"><b>Aktionen</b></td>
+    </thead>
+    {% for l in pages %}
+    <tr>
+        <td width="30px">
+          <img class="d-inline-block align-text-top" src='https://image.tmdb.org/t/p/w500/{{ l.poster_path }}' width="25px">
+        </td>
+        <td class="align-middle">
+            <a href="/detail/{{ l.id }}/{{ page }}">{{ l.title }}</a>
+        </td>
+        <td class="align-middle">
+            {{ l.genre }}
+        </td>
+        <td class="align-middle">
+            {{ l.duration }} min
+        </td>
+        <td class="align-middle">
+          {{ l.vote_average }}
+        </td>
+        <td class="align-middle">
+          {{ l.mymdb_avg }}
+        </td>
+        <td class="align-middle">
+          {{ l.userrating }}
+        </td>
+        <td width="50px" class="align-middle"><a href="/rate/{{ l.id }}/{{ page }}"><img src="/static/star.png"></a></td>
+        <td width="50px" class="align-middle"><a href="/edit/{{ l.id }}/{{ page }}"><img src="/static/movie-edit.png"></a></td>
+        <td width="50px" class="align-middle"><a href="/delete/{{ l.id }}/{{ page }}"><img src="/static/delete.png"></a></td>
+    </tr>
+    {% endfor %}
+</table>
+<nav>
+<ul class="pagination"> 
+  {% for n in range(1,total_pages + 1) %}
+  {% if page %}
+    {% if page != n %}
+      <li class="page-item"><a href="{{ url_for('list', page=n) }}" class="page-link">{{ n }}</a></li>
+    {% else %}
+      <li class="page-item disabled"><a href="#" class="page-link">{{ n }}</a></li>
+    {% endif %}
+  {% endif %}
+{%- endfor %}
+</ul>
+</nav>
+</div>
+{% endblock %}
+

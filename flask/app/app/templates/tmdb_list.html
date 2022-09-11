@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block app_content %}
+<table class="table table-hover">
+    <thead>
+        <th>Titel</th>
+        <th>Erscheinungsdatum</th>
+    </thead>
+    {% for search in search %}
+    <tr>
+        <td>
+            {{ search.title }}
+        </td>
+        <td>
+            {{ search.release_date }}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
